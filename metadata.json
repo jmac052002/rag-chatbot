@@ -1,0 +1,78 @@
+[
+  {
+    "text": "AWS Bedrock and Available Foundation Models\r\n\r\nWhat is Amazon Bedrock?\r\nAmazon Bedrock is a fully managed AWS service that provides access to foundation models \r\nfrom multiple AI companies through a single API. You do not need to manage servers, \r\ndownload model weights, or handle infrastructure. You call the API and pay per token.\r\n\r\nKey benefits of Bedrock:\r\n- No GPU infrastructure to manage\r\n- Access to models from Anthropic, Meta, Mistral, Amazon, and others\r\n- IAM-based access control integrates with existing AWS permissions\r\n- Data does not leave your AWS account by default\r\n- Supports fine-tuning and RAG workflows natively\r\n\r\nAvailable model families on Bedrock:",
+    "source": "aws_bedrock_and_models.txt"
+  },
+  {
+    "text": "- Supports fine-tuning and RAG workflows natively\r\n\r\nAvailable model families on Bedrock:\r\nAnthropic Claude Strong reasoning, long context, instruction following. \r\nGood for complex Q&A, summarization, and code. Claude 3 Haiku is fast and cheap. \r\nClaude 3 Sonnet balances speed and capability. Claude 3 Opus is the most capable.\r\n\r\nAmazon Titan Amazon's own models. Titan Text for generation. \r\nTitan Embeddings V2 for creating 1024-dimensional embeddings. \r\nTight integration with other AWS services.\r\n\r\nMeta Llama Open weights model available through Bedrock. \r\nLlama 3 is strong for general purpose tasks. Good option when you want \r\nan open source model with managed infrastructure.",
+    "source": "aws_bedrock_and_models.txt"
+  },
+  {
+    "text": "an open source model with managed infrastructure.\r\n\r\nMistral — European AI company. Fast models with strong multilingual support. \r\nMistral Large competes with GPT-4 class models.\r\n\r\nHow to invoke a model via Bedrock:\r\nYou use the bedrock-runtime client in boto3. The invoke_model call takes a modelId, \r\na JSON body formatted to that model's specification, and returns a response body. \r\nEach model family has a slightly different request and response format.\r\n\r\nModel access:\r\nModels must be explicitly enabled in the Bedrock console before use. Navigate to \r\nAmazon Bedrock, select Model Access, and request access to each model you need.",
+    "source": "aws_bedrock_and_models.txt"
+  },
+  {
+    "text": "Amazon Bedrock, select Model Access, and request access to each model you need. \r\nAccess is granted per region. Titan Embeddings V2 must be enabled in the same \r\nregion your scripts are configured to use.\r\n\r\nBedrock vs SageMaker:\r\nBedrock is for using pre-built foundation models with no infrastructure work. \r\nSageMaker is for training, fine-tuning, and deploying custom models. For a RAG \r\nchatbot using existing models, Bedrock is the right choice.",
+    "source": "aws_bedrock_and_models.txt"
+  },
+  {
+    "text": "Understanding Embeddings and Vector Search\r\n\r\nWhat is an embedding?\r\nAn embedding is a numerical representation of text. When you pass a sentence to an \r\nembedding model, it returns a list of floating point numbers called a vector. Similar \r\nsentences produce vectors that are close together in mathematical space. Unrelated \r\nsentences produce vectors that are far apart.\r\n\r\nExample:\r\n\"How do I restart the server?\" and \"What is the process for rebooting a machine?\" \r\nwould produce vectors very close to each other even though they share no exact words.\r\n\r\nWhy 1024 dimensions?\r\nAmazon Titan Embeddings V2 produces 1024-dimensional vectors. This means each piece",
+    "source": "embeddings_and_vectors.txt"
+  },
+  {
+    "text": "Amazon Titan Embeddings V2 produces 1024-dimensional vectors. This means each piece \r\nof text becomes a list of 1024 numbers. More dimensions generally means more \r\nexpressive power the model can encode more nuance about meaning. Other models \r\nuse 768, 1536, or 3072 dimensions depending on their size and architecture.\r\n\r\nWhat is a vector database?\r\nA vector database is a system optimized for storing and searching embeddings. Unlike \r\na traditional database that matches exact keywords, a vector database finds the nearest \r\nneighbors in high-dimensional space. FAISS, Pinecone, Weaviate, and Chroma are \r\ncommon options.\r\n\r\nFAISS specifically:",
+    "source": "embeddings_and_vectors.txt"
+  },
+  {
+    "text": "common options.\r\n\r\nFAISS specifically:\r\nFAISS stands for Facebook AI Similarity Search. It is an open source library that stores \r\nvectors in memory and performs extremely fast similarity search. IndexFlatL2 uses \r\nEuclidean distance to find nearest neighbors. A lower L2 score means a closer match.\r\n\r\nThe chunking connection:\r\nDocuments must be split into chunks before embedding because embedding models have \r\ntoken limits. Each chunk gets its own embedding vector. When you search, you retrieve \r\nchunks not whole documents. This is why chunk size and overlap matter — they determine \r\nthe granularity of what gets retrieved.\r\n\r\nSemantic search vs keyword search:",
+    "source": "embeddings_and_vectors.txt"
+  },
+  {
+    "text": "the granularity of what gets retrieved.\r\n\r\nSemantic search vs keyword search:\r\nTraditional search matches exact words. Semantic search matches meaning. A RAG \r\nsystem using embeddings will find relevant chunks even when the user's question uses \r\ndifferent vocabulary than the source document.",
+    "source": "embeddings_and_vectors.txt"
+  },
+  {
+    "text": "Large Language Model Fundamentals\r\n\r\nWhat is a large language model?\r\nA large language model (LLM) is a neural network trained on massive amounts of text \r\ndata to predict and generate human language. Models like GPT-4, Claude, Llama, and \r\nAmazon Titan are all LLMs. They learn grammar, facts, reasoning patterns, and style \r\nfrom the statistical patterns in their training data.\r\n\r\nThe transformer architecture:\r\nAll modern LLMs are built on the transformer architecture introduced in the 2017 paper \r\n\"Attention is All You Need.\" The key innovation is the attention mechanism, which allows \r\nthe model to weigh the importance of every word in the input relative to every other word",
+    "source": "llm_fundamentals.txt"
+  },
+  {
+    "text": "the model to weigh the importance of every word in the input relative to every other word \r\nwhen generating each output token.\r\n\r\nTokens not words:\r\nLLMs process text as tokens, not words. A token is roughly 3-4 characters on average. \r\nThe word \"embedding\" is one token. The word \"unbelievable\" might be split into two or \r\nthree tokens. Token limits determine how much text you can send to a model in one call. \r\nGPT-4 supports up to 128,000 tokens. Claude 3 supports up to 200,000.\r\n\r\nTemperature:\r\nTemperature is a parameter that controls randomness in the model's output. A temperature \r\nof 0 makes the model deterministic it always picks the most likely next token. A",
+    "source": "llm_fundamentals.txt"
+  },
+  {
+    "text": "of 0 makes the model deterministic it always picks the most likely next token. A \r\ntemperature of 1 introduces creativity and variation. For factual Q&A over documents, \r\nlow temperature (0 to 0.3) is preferred.\r\n\r\nContext window:\r\nThe context window is the total amount of text the model can see at once, including your \r\nprompt, retrieved chunks, and the conversation history. RAG systems must fit retrieved \r\nchunks within this window. If you retrieve too many chunks or chunks are too large, you \r\nwill exceed the context limit.\r\n\r\nInference vs training:\r\nTraining is the expensive, one-time process of teaching the model on billions of tokens.",
+    "source": "llm_fundamentals.txt"
+  },
+  {
+    "text": "Training is the expensive, one-time process of teaching the model on billions of tokens. \r\nInference is the cheaper, repeated process of using the trained model to generate responses. \r\nWhen you call Amazon Bedrock, you are doing inference you are not changing the model.\r\n\r\nHallucination:\r\nHallucination is when an LLM generates confident but false information. RAG reduces \r\nhallucination by grounding responses in retrieved documents. The model is more likely to \r\nstay accurate when relevant context is explicitly provided in the prompt.",
+    "source": "llm_fundamentals.txt"
+  },
+  {
+    "text": "Prompt Engineering Basics\r\n\r\nWhat is prompt engineering?\r\nPrompt engineering is the practice of crafting inputs to a language model to get \r\nbetter, more reliable outputs. Because LLMs are sensitive to how instructions are \r\nphrased, small changes in wording can produce significantly different results.\r\n\r\nSystem prompts vs user prompts:\r\nA system prompt sets the context, persona, and rules for the model before the \r\nconversation begins. A user prompt is the actual question or request. In a RAG \r\nsystem, the system prompt typically instructs the model to answer only based on \r\nprovided context and to say it does not know if the answer is not in the documents.\r\n\r\nRAG prompt pattern:",
+    "source": "prompt_engineering_basics.txt"
+  },
+  {
+    "text": "RAG prompt pattern:\r\nA standard RAG prompt injects retrieved chunks between the instruction and the \r\nquestion like this:\r\n\r\nYou are a helpful assistant. Answer the question using only the context below.\r\nIf the answer is not in the context, say you do not know.\r\n\r\nContext:\r\n[retrieved chunk 1]\r\n[retrieved chunk 2]\r\n[retrieved chunk 3]\r\n\r\nQuestion: [user question]\r\n\r\nThis pattern keeps the model grounded and reduces hallucination significantly.\r\n\r\nFew-shot prompting:\r\nFew-shot prompting means including examples of the desired input-output format \r\nin the prompt itself. The model learns the pattern from the examples and applies",
+    "source": "prompt_engineering_basics.txt"
+  },
+  {
+    "text": "in the prompt itself. The model learns the pattern from the examples and applies \r\nit to new inputs. Zero-shot means no examples are given just the instruction.\r\n\r\nChain of thought:\r\nChain of thought prompting asks the model to reason step by step before giving \r\na final answer. Adding \"think step by step\" or \"explain your reasoning\" to a \r\nprompt often improves accuracy on complex questions. This works because it forces \r\nthe model to generate intermediate reasoning tokens that guide the final output.\r\n\r\nCommon mistakes:\r\n- Vague instructions produce vague outputs. Be specific about format and length.\r\n- Asking too many things in one prompt splits the model's attention.",
+    "source": "prompt_engineering_basics.txt"
+  },
+  {
+    "text": "- Asking too many things in one prompt splits the model's attention.\r\n- Not providing context forces the model to rely on training data and hallucinate.\r\n- Forgetting to tell the model what to do when it does not know the answer.\r\n\r\nPrompt templates in RAG:\r\nIn production RAG systems, the prompt is assembled programmatically. The retriever \r\nfinds the top chunks, the orchestrator inserts them into a template string, and the \r\nfilled template is sent to the LLM. Lambda functions commonly handle this assembly \r\nstep in AWS-based RAG architectures.",
+    "source": "prompt_engineering_basics.txt"
+  },
+  {
+    "text": "What is Retrieval-Augmented Generation (RAG)?\r\n\r\nRetrieval-Augmented Generation, or RAG, is an AI architecture pattern that combines a \r\nlanguage model with an external knowledge source. Instead of relying solely on what a \r\nmodel learned during training, RAG retrieves relevant documents at query time and injects \r\nthem into the prompt before the model generates a response.\r\n\r\nWhy RAG matters:\r\nLarge language models have a training cutoff date. They cannot know about events or \r\ndocuments created after they were trained. RAG solves this by giving the model access to \r\na dynamic, updateable knowledge base at inference time.\r\n\r\nHow RAG works step by step:",
+    "source": "what_is_rag.txt"
+  },
+  {
+    "text": "a dynamic, updateable knowledge base at inference time.\r\n\r\nHow RAG works step by step:\r\n1. Documents are split into chunks and converted into vector embeddings.\r\n2. Embeddings are stored in a vector database such as FAISS or Pinecone.\r\n3. When a user asks a question, the question is also converted into an embedding.\r\n4. The vector database finds the most similar document chunks using distance math.\r\n5. Those chunks are inserted into the LLM prompt as context.\r\n6. The LLM generates an answer grounded in the retrieved content.\r\n\r\nRAG vs fine-tuning:\r\nFine-tuning bakes knowledge into the model weights permanently. RAG keeps knowledge",
+    "source": "what_is_rag.txt"
+  },
+  {
+    "text": "Fine-tuning bakes knowledge into the model weights permanently. RAG keeps knowledge \r\nexternal and swappable. RAG is cheaper, faster to update, and easier to audit. Fine-tuning \r\nis better when you need to change the model's tone or behavior rather than its knowledge.\r\n\r\nCommon RAG use cases:\r\n- Customer support bots grounded in product documentation\r\n- Internal knowledge assistants over company wikis\r\n- Legal or medical Q&A over curated document sets\r\n- Code assistants with access to private repositories\r\n\r\nRAG is the foundation of most production AI assistants deployed in enterprise settings today.",
+    "source": "what_is_rag.txt"
+  }
+]
