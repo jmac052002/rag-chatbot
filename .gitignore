@@ -1,3 +1,4 @@
 ai-agent-env/
 faiss_index.bin
 metadata.json
+build/
