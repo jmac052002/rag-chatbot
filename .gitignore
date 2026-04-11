@@ -1,6 +1,18 @@
+# Virtual environment
 ai-agent-env/
+
+# Local FAISS index and metadata
 faiss_index.bin
 metadata.json
+
+# Build artifacts
 build/
+package/
+
+# Test response files
 response.json
 embedder_response.json
+
+# Python cache
+__pycache__/
+*.pyc
