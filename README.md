@@ -109,13 +109,13 @@ Or copy `.env.example` (if provided) to `.env` and populate it.
 
 ## Usage
 
-**Every session — activate the venv first:**
+**Every session activate the venv first:**
 
 ```bash
 source ~/ai-agent-env/bin/activate
 ```
 
-**Step 1 — Build the FAISS index from your S3 documents:**
+**Step 1 Build the FAISS index from your S3 documents:**
 
 ```bash
 python embed_documents_v3_s3.py
@@ -123,7 +123,7 @@ python embed_documents_v3_s3.py
 
 This reads `.txt` files from S3, chunks them (700 tokens, 100 overlap), generates embeddings via Titan Embeddings V2, and writes `faiss_index.bin` + `metadata.json` back to `s3://your-bucket/indexes/`.
 
-**Step 2 — Test semantic retrieval:**
+**Step 2 Test semantic retrieval:**
 
 ```bash
 python query_retriever_v2_s3.py
@@ -190,7 +190,7 @@ __pycache__/
 
 ## Author
 
-Joseph McCoy — transitioning from manufacturing into cloud/DevOps engineering.  
+Joseph McCoy transitioning from manufacturing into cloud/DevOps engineering.  
 Building real AWS infrastructure as part of the Digital Cloud Training Agentic AI bootcamp.
 
 GitHub: [@jmac052002](https://github.com/jmac052002)
