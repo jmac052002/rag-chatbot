@@ -1,5 +1,5 @@
 import embed_lambda
-
+import json
 # Simulates what S3 sends when a file is uploaded
 fake_event = {
     "Records": [{
@@ -13,5 +13,5 @@ fake_event = {
 result = embed_lambda.lambda_handler(fake_event, None)
 
 print("Status Code:", result["statusCode"])
-import json
+
 print(json.dumps(json.loads(result["body"]), indent=2)) 
