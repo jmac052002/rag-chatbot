@@ -16,4 +16,4 @@ embedder_response.json
 # Python cache
 __pycache__/
 *.pyc
-*.pyo
+*.pyopackage/
